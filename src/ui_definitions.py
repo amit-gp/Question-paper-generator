@@ -1,0 +1,91 @@
+# -*- coding: utf-8 -*-
+
+# Form implementation generated from reading ui file 'ui/UI_GeneratorMainWindow.ui'
+#
+# Created by: PyQt5 UI code generator 5.10
+#
+# WARNING! All changes made in this file will be lost!
+
+from PyQt5 import QtCore, QtGui, QtWidgets
+
+class Ui_GeneratorMainWindow(object):
+    def setupUi(self, GeneratorMainWindow):
+        GeneratorMainWindow.setObjectName("GeneratorMainWindow")
+        GeneratorMainWindow.resize(851, 617)
+        self.centralwidget = QtWidgets.QWidget(GeneratorMainWindow)
+        self.centralwidget.setObjectName("centralwidget")
+        GeneratorMainWindow.setCentralWidget(self.centralwidget)
+        self.menubar = QtWidgets.QMenuBar(GeneratorMainWindow)
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 851, 22))
+        self.menubar.setObjectName("menubar")
+        self.menuFile = QtWidgets.QMenu(self.menubar)
+        self.menuFile.setObjectName("menuFile")
+        self.menuHelp = QtWidgets.QMenu(self.menubar)
+        self.menuHelp.setObjectName("menuHelp")
+        self.menuActions = QtWidgets.QMenu(self.menubar)
+        self.menuActions.setObjectName("menuActions")
+        self.menuSettings = QtWidgets.QMenu(self.menubar)
+        self.menuSettings.setObjectName("menuSettings")
+        GeneratorMainWindow.setMenuBar(self.menubar)
+        self.statusbar = QtWidgets.QStatusBar(GeneratorMainWindow)
+        self.statusbar.setObjectName("statusbar")
+        GeneratorMainWindow.setStatusBar(self.statusbar)
+        self.toolBar = QtWidgets.QToolBar(GeneratorMainWindow)
+        self.toolBar.setObjectName("toolBar")
+        GeneratorMainWindow.addToolBar(QtCore.Qt.TopToolBarArea, self.toolBar)
+        GeneratorMainWindow.insertToolBarBreak(self.toolBar)
+        self.actionNew_QP = QtWidgets.QAction(GeneratorMainWindow)
+        self.actionNew_QP.setObjectName("actionNew_QP")
+        self.actionLoad_QP = QtWidgets.QAction(GeneratorMainWindow)
+        self.actionLoad_QP.setObjectName("actionLoad_QP")
+        self.actionSave_QP = QtWidgets.QAction(GeneratorMainWindow)
+        self.actionSave_QP.setObjectName("actionSave_QP")
+        self.actionSave_As = QtWidgets.QAction(GeneratorMainWindow)
+        self.actionSave_As.setObjectName("actionSave_As")
+        self.actionQuit = QtWidgets.QAction(GeneratorMainWindow)
+        self.actionQuit.setObjectName("actionQuit")
+        self.actionAbout = QtWidgets.QAction(GeneratorMainWindow)
+        self.actionAbout.setObjectName("actionAbout")
+        self.actionGenerate = QtWidgets.QAction(GeneratorMainWindow)
+        self.actionGenerate.setObjectName("actionGenerate")
+        self.actionPreview = QtWidgets.QAction(GeneratorMainWindow)
+        self.actionPreview.setObjectName("actionPreview")
+        self.actionPreferences = QtWidgets.QAction(GeneratorMainWindow)
+        self.actionPreferences.setObjectName("actionPreferences")
+        self.menuFile.addAction(self.actionNew_QP)
+        self.menuFile.addAction(self.actionLoad_QP)
+        self.menuFile.addAction(self.actionSave_QP)
+        self.menuFile.addAction(self.actionSave_As)
+        self.menuFile.addSeparator()
+        self.menuFile.addAction(self.actionQuit)
+        self.menuHelp.addAction(self.actionAbout)
+        self.menuActions.addAction(self.actionGenerate)
+        self.menuActions.addAction(self.actionPreview)
+        self.menuSettings.addAction(self.actionPreferences)
+        self.menubar.addAction(self.menuFile.menuAction())
+        self.menubar.addAction(self.menuActions.menuAction())
+        self.menubar.addAction(self.menuSettings.menuAction())
+        self.menubar.addAction(self.menuHelp.menuAction())
+        self.toolBar.addAction(self.actionNew_QP)
+
+        self.retranslateUi(GeneratorMainWindow)
+        QtCore.QMetaObject.connectSlotsByName(GeneratorMainWindow)
+
+    def retranslateUi(self, GeneratorMainWindow):
+        _translate = QtCore.QCoreApplication.translate
+        GeneratorMainWindow.setWindowTitle(_translate("GeneratorMainWindow", "Question Paper Generator"))
+        self.menuFile.setTitle(_translate("GeneratorMainWindow", "File"))
+        self.menuHelp.setTitle(_translate("GeneratorMainWindow", "Help"))
+        self.menuActions.setTitle(_translate("GeneratorMainWindow", "Actions"))
+        self.menuSettings.setTitle(_translate("GeneratorMainWindow", "Settings"))
+        self.toolBar.setWindowTitle(_translate("GeneratorMainWindow", "toolBar"))
+        self.actionNew_QP.setText(_translate("GeneratorMainWindow", "New"))
+        self.actionLoad_QP.setText(_translate("GeneratorMainWindow", "Load"))
+        self.actionSave_QP.setText(_translate("GeneratorMainWindow", "Save"))
+        self.actionSave_As.setText(_translate("GeneratorMainWindow", "Save As"))
+        self.actionQuit.setText(_translate("GeneratorMainWindow", "Quit"))
+        self.actionAbout.setText(_translate("GeneratorMainWindow", "About"))
+        self.actionGenerate.setText(_translate("GeneratorMainWindow", "Generate into..."))
+        self.actionPreview.setText(_translate("GeneratorMainWindow", "Preview"))
+        self.actionPreferences.setText(_translate("GeneratorMainWindow", "Preferences"))
+
