@@ -1,6 +1,6 @@
 from PyQt5 import QtWidgets, QtCore
 from ui_definitions import Ui_NewQPWidget
-import os.path
+import os.path, os
 
 
 class NewQPWidget(QtWidgets.QWidget, Ui_NewQPWidget):
@@ -34,7 +34,15 @@ class NewQPWidget(QtWidgets.QWidget, Ui_NewQPWidget):
         if not (self.get_file_extension(self.qp_filename_line_edit.text()) == '.qp'):
             self.qp_filename = self.qp_filename + '.qp'
 
-        print(self.qp_filename)
+        #self.setEnabled(False)
+        # Creating a new instance of GeneratorMainWindow, after creating and loading the file
+        new_file = ''
+        if os.name == 'posix':
+            new_file = QtCore.QDir(self.qp_path + '/' +  self.qp_filename).path()
+        elif os.name == 'nt':
+            new_file = QtCore.QDir(self.qp_path + '\\' + self.qp_filename).path()
+
+        print(new_file)
 
     def cancel_qp_clicked(self):
         self.close()
