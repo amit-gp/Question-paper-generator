@@ -1,9 +1,8 @@
+import os.path
+import json
+from global_vars import GlobalVars
 from PyQt5 import QtWidgets, QtCore
 from ui_definitions import Ui_NewQPDialog
-import os.path
-from global_vars import GlobalVars
-import json
-from main_window import GeneratorMainWindow
 
 
 class NewQPWidget(QtWidgets.QDialog, Ui_NewQPDialog):
@@ -40,29 +39,24 @@ class NewQPWidget(QtWidgets.QDialog, Ui_NewQPDialog):
 
         self.setEnabled(False)
         # Creating a new instance of GeneratorMainWindow, after creating and loading the file
-        new_file = ''
+        self.new_file = ''
         if os.name == 'posix':
-            new_file = QtCore.QDir(self.qp_path + '/' +  self.qp_filename).path()
+            self.new_file = QtCore.QDir(self.qp_path + '/' +  self.qp_filename).path()
         elif os.name == 'nt':
-            new_file = QtCore.QDir(self.qp_path + '\\' + self.qp_filename).path()
-        print("Creating new qp file " + new_file)
-        q_file = QtCore.QFile(new_file)
+            self.new_file = QtCore.QDir(self.qp_path + '\\' + self.qp_filename).path()
+        print("Creating new qp file " + self.new_file)
+        q_file = QtCore.QFile(self.new_file)
         if not q_file.open(QtCore.QFile.ReadWrite):
             QtWidgets.QMessageBox.critical(self, 'Error Creating', 'Unable to create the file !',
                                            QtWidgets.QMessageBox.Ok)
             return
         q_file.close()
-        self.new_qp_full_path = new_file
-        #print(self.gv.default_qp_values)
-        file = open(new_file, "w", encoding="utf-8")
+
+        self.new_qp_full_path = self.new_file
+        file = open(self.new_file, "w", encoding="utf-8")
         json.dump(self.gv.default_qp_values, file)
         file.close()
-        #Created the file with default contents
         self.close()
-
-        # Load the main window
-        self.main_win = GeneratorMainWindow(self.new_qp_full_path)
-        self.main_win.show()
 
     def cancel_qp_clicked(self):
         self.close()

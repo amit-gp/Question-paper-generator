@@ -10,4 +10,4 @@ class GlobalVars:
             'max_marks': 100,
             'date': '12/12/2017'
         }
-        self.default_qp_values['Hellooo'] = 'Amitttttt'
+

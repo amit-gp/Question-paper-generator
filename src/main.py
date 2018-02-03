@@ -1,7 +1,8 @@
 from PyQt5 import QtWidgets
-from ui_definitions import Ui_GeneratorWelcomeDialog
+from main_window import GeneratorMainWindow
 from helper_widgets import NewQPWidget
 import sys
+from ui_definitions import Ui_GeneratorWelcomeDialog
 
 
 class GeneratorWelcomeWidget(QtWidgets.QWidget, Ui_GeneratorWelcomeDialog):
@@ -14,10 +15,12 @@ class GeneratorWelcomeWidget(QtWidgets.QWidget, Ui_GeneratorWelcomeDialog):
         self.openPushButton.clicked.connect(self.open_new_qp_clicked)
 
     def create_new_qp_clicked(self):
-        self.new_qp_win = NewQPWidget()
-        self.new_qp_win.exec_()
+        new_qp_win = NewQPWidget()
+        new_qp_win.exec_()
 
-
+        self.gen_win = GeneratorMainWindow(new_qp_win.new_file)
+        self.gen_win.show()
+        self.close()
 
     def open_new_qp_clicked(self):
         pass
