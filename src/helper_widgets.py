@@ -14,6 +14,7 @@ class NewQPWidget(QtWidgets.QDialog, Ui_NewQPDialog):
         self.setWindowModality(QtCore.Qt.ApplicationModal)
         self._initialize_defaults()
         self.gv = GlobalVars()
+        self.new_file = ''
 
         # Connecting the signals and slots
         self.create_qp_push_button.clicked.connect(self.create_qp_clicked)
@@ -32,16 +33,15 @@ class NewQPWidget(QtWidgets.QDialog, Ui_NewQPDialog):
     def create_qp_clicked(self):
         # Checking to see if the values are valid
         if not (self.qp_path_line_edit.text()) or not (self.qp_filename_line_edit.text()):
-            QtWidgets.QMessageBox.critical(self, 'Error Creating', 'The input fields are invalid', QtWidgets.QMessageBox.Ok)
+            QtWidgets.QMessageBox.critical(self, 'Error Creating', 'The input fields are invalid',
+                                           QtWidgets.QMessageBox.Ok)
             return
         if not (self.get_file_extension(self.qp_filename_line_edit.text()) == '.qp'):
             self.qp_filename = self.qp_filename + '.qp'
-
         self.setEnabled(False)
         # Creating a new instance of GeneratorMainWindow, after creating and loading the file
-        self.new_file = ''
         if os.name == 'posix':
-            self.new_file = QtCore.QDir(self.qp_path + '/' +  self.qp_filename).path()
+            self.new_file = QtCore.QDir(self.qp_path + '/' + self.qp_filename).path()
         elif os.name == 'nt':
             self.new_file = QtCore.QDir(self.qp_path + '\\' + self.qp_filename).path()
         print("Creating new qp file " + self.new_file)
@@ -51,19 +51,18 @@ class NewQPWidget(QtWidgets.QDialog, Ui_NewQPDialog):
                                            QtWidgets.QMessageBox.Ok)
             return
         q_file.close()
-
         self.new_qp_full_path = self.new_file
         file = open(self.new_file, "w", encoding="utf-8")
         json.dump(self.gv.default_qp_values, file)
         file.close()
-        self.close()
+        self.done(1)
 
     def cancel_qp_clicked(self):
         self.close()
 
     def qp_path_clicked(self):
         self.qp_path = QtWidgets.QFileDialog.getExistingDirectory(self, 'Choose path', self.qp_path,
-                                    QtWidgets.QFileDialog.ShowDirsOnly | QtWidgets.QFileDialog.DontResolveSymlinks)
+                                                                  QtWidgets.QFileDialog.ShowDirsOnly | QtWidgets.QFileDialog.DontResolveSymlinks)
         self.qp_path_line_edit.setText(self.qp_path)
 
     #   Class methods:
@@ -71,9 +70,18 @@ class NewQPWidget(QtWidgets.QDialog, Ui_NewQPDialog):
     def _initialize_defaults(self):
         self.qp_path = QtCore.QStandardPaths.writableLocation(QtCore.QStandardPaths.DocumentsLocation)
         self.qp_path_line_edit.setText(self.qp_path)
-
         self.qp_filename = 'untitled.qp'
         self.qp_filename_line_edit.setText(self.qp_filename)
 
     def get_file_extension(self, file):
         return os.path.splitext(file)[1]
+
+
+class OpenQPWidget(QtWidgets.QFileDialog):
+
+    def __init__(self):
+        super(self.__class__, self).__init__()
+        self.open_file = self.getOpenFileName(self, 'Open Question paper', str(QtCore.QStandardPaths.DocumentsLocation),
+                             'Question Paper (*.qp)')[0]
+        if not self.open_file:
+            return

@@ -1,6 +1,6 @@
 from PyQt5 import QtWidgets
 from main_window import GeneratorMainWindow
-from helper_widgets import NewQPWidget
+from helper_widgets import NewQPWidget, OpenQPWidget
 import sys
 from ui_definitions import Ui_GeneratorWelcomeDialog
 
@@ -16,14 +16,20 @@ class GeneratorWelcomeWidget(QtWidgets.QWidget, Ui_GeneratorWelcomeDialog):
 
     def create_new_qp_clicked(self):
         new_qp_win = NewQPWidget()
-        new_qp_win.exec_()
+        if not new_qp_win.exec_():
+            return
 
         self.gen_win = GeneratorMainWindow(new_qp_win.new_file)
         self.gen_win.show()
         self.close()
 
     def open_new_qp_clicked(self):
-        pass
+        open_qp_win = OpenQPWidget()
+        if not open_qp_win.open_file:
+            return
+        self.gen_win = GeneratorMainWindow(open_qp_win.open_file)
+        self.gen_win.show()
+        self.close()
 
     def settings_clicked(self):
         pass

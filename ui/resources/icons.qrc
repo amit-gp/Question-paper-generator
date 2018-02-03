@@ -1,6 +1,8 @@
 <RCC>
   <qresource>
-    <file>icons/new_qp.png</file>
-    <file>icons/open_qp.png</file>
+      <file>icons/print_qp.png</file>
+      <file>icons/new_qp.png</file>
+      <file>icons/open_qp.png</file>
+      <file>icons/save_qp.png</file>
   </qresource>
 </RCC>
