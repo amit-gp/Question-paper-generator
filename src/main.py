@@ -1,14 +1,7 @@
 from PyQt5 import QtWidgets
-from ui_definitions import Ui_GeneratorMainWindow, Ui_GeneratorWelcomeDialog
+from ui_definitions import Ui_GeneratorWelcomeDialog
 from helper_widgets import NewQPWidget
 import sys
-
-
-class GeneratorMainWindow(QtWidgets.QMainWindow, Ui_GeneratorMainWindow):
-
-    def __init__(self):
-        super(self.__class__, self).__init__()
-        self.setupUi(self)
 
 
 class GeneratorWelcomeWidget(QtWidgets.QWidget, Ui_GeneratorWelcomeDialog):
@@ -22,7 +15,9 @@ class GeneratorWelcomeWidget(QtWidgets.QWidget, Ui_GeneratorWelcomeDialog):
 
     def create_new_qp_clicked(self):
         self.new_qp_win = NewQPWidget()
-        self.new_qp_win.show()
+        self.new_qp_win.exec_()
+
+
 
     def open_new_qp_clicked(self):
         pass

@@ -1,31 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>NewQPWidget</class>
- <widget class="QWidget" name="NewQPWidget">
-  <property name="windowModality">
-   <enum>Qt::ApplicationModal</enum>
-  </property>
+ <class>NewQPDialog</class>
+ <widget class="QDialog" name="NewQPDialog">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>443</width>
-    <height>157</height>
+    <width>457</width>
+    <height>163</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>New Question Paper</string>
+   <string>Create new QP</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
-   <property name="spacing">
-    <number>10</number>
-   </property>
-   <property name="sizeConstraint">
-    <enum>QLayout::SetDefaultConstraint</enum>
-   </property>
-   <property name="leftMargin">
-    <number>9</number>
-   </property>
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <property name="sizeConstraint">
@@ -92,7 +80,4 @@
  </widget>
  <resources/>
  <connections/>
- <slots>
-  <slot>qp_path_tool_clicked()</slot>
- </slots>
 </ui>

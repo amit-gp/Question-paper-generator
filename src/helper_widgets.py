@@ -1,9 +1,12 @@
 from PyQt5 import QtWidgets, QtCore
-from ui_definitions import Ui_NewQPWidget
-import os.path, os
+from ui_definitions import Ui_NewQPDialog
+import os.path
+from global_vars import GlobalVars
+import json
+from main_window import GeneratorMainWindow
 
 
-class NewQPWidget(QtWidgets.QWidget, Ui_NewQPWidget):
+class NewQPWidget(QtWidgets.QDialog, Ui_NewQPDialog):
 
     def __init__(self):
         super(self.__class__, self).__init__()
@@ -11,6 +14,7 @@ class NewQPWidget(QtWidgets.QWidget, Ui_NewQPWidget):
         self.setFixedSize(self.size())
         self.setWindowModality(QtCore.Qt.ApplicationModal)
         self._initialize_defaults()
+        self.gv = GlobalVars()
 
         # Connecting the signals and slots
         self.create_qp_push_button.clicked.connect(self.create_qp_clicked)
@@ -34,15 +38,31 @@ class NewQPWidget(QtWidgets.QWidget, Ui_NewQPWidget):
         if not (self.get_file_extension(self.qp_filename_line_edit.text()) == '.qp'):
             self.qp_filename = self.qp_filename + '.qp'
 
-        #self.setEnabled(False)
+        self.setEnabled(False)
         # Creating a new instance of GeneratorMainWindow, after creating and loading the file
         new_file = ''
         if os.name == 'posix':
             new_file = QtCore.QDir(self.qp_path + '/' +  self.qp_filename).path()
         elif os.name == 'nt':
             new_file = QtCore.QDir(self.qp_path + '\\' + self.qp_filename).path()
+        print("Creating new qp file " + new_file)
+        q_file = QtCore.QFile(new_file)
+        if not q_file.open(QtCore.QFile.ReadWrite):
+            QtWidgets.QMessageBox.critical(self, 'Error Creating', 'Unable to create the file !',
+                                           QtWidgets.QMessageBox.Ok)
+            return
+        q_file.close()
+        self.new_qp_full_path = new_file
+        #print(self.gv.default_qp_values)
+        file = open(new_file, "w", encoding="utf-8")
+        json.dump(self.gv.default_qp_values, file)
+        file.close()
+        #Created the file with default contents
+        self.close()
 
-        print(new_file)
+        # Load the main window
+        self.main_win = GeneratorMainWindow(self.new_qp_full_path)
+        self.main_win.show()
 
     def cancel_qp_clicked(self):
         self.close()
