@@ -4,5 +4,6 @@
       <file>icons/new_qp.png</file>
       <file>icons/open_qp.png</file>
       <file>icons/save_qp.png</file>
+      <file>icons/qpd_open.png</file>
   </qresource>
 </RCC>
