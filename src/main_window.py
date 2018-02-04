@@ -39,5 +39,14 @@ class GeneratorMainWindow(QtWidgets.QMainWindow, Ui_GeneratorMainWindow):
         json_data = json.load(new_qp_file)
         new_qp_file.close()
         print("Loaded data: " + str(json_data))
+        self.load_gui_values(json_data)
         return 1
 
+    def load_gui_values(self, json_data):
+
+        self.qp_code_line_edit.setText(json_data['qp_code'])
+        self.exam_name_line_edit.setText(json_data['exam_name'])
+        self.program_line_edit.setText(json_data['program'])
+        self.course_code_line_edit.setText(json_data['course_code'])
+        self.marks_spin_box.setValue(json_data['max_marks'])
+        self.exam_date_edit.setDate()
