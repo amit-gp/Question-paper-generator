@@ -7,7 +7,7 @@ from ui_definitions import Ui_NewQPDialog
 
 class NewQPWidget(QtWidgets.QDialog, Ui_NewQPDialog):
 
-    def __init__(self):
+    def __init__(self, extension = '.qp'):
         super(self.__class__, self).__init__()
         self.setupUi(self)
         self.setFixedSize(self.size())
@@ -15,6 +15,7 @@ class NewQPWidget(QtWidgets.QDialog, Ui_NewQPDialog):
         self._initialize_defaults()
         self.gv = GlobalVars()
         self.new_file = ''
+        self.extension = extension
 
         # Connecting the signals and slots
         self.create_qp_push_button.clicked.connect(self.create_qp_clicked)
@@ -36,8 +37,8 @@ class NewQPWidget(QtWidgets.QDialog, Ui_NewQPDialog):
             QtWidgets.QMessageBox.critical(self, 'Error Creating', 'The input fields are invalid',
                                            QtWidgets.QMessageBox.Ok)
             return
-        if not (self.get_file_extension(self.qp_filename_line_edit.text()) == '.qp'):
-            self.qp_filename = self.qp_filename + '.qp'
+        if not (self.get_file_extension(self.qp_filename_line_edit.text()) == self.extension):
+            self.qp_filename = self.qp_filename + self.extension
         self.setEnabled(False)
         # Creating a new instance of GeneratorMainWindow, after creating and loading the file
         if os.name == 'posix':
@@ -53,7 +54,11 @@ class NewQPWidget(QtWidgets.QDialog, Ui_NewQPDialog):
         q_file.close()
         self.new_qp_full_path = self.new_file
         file = open(self.new_file, "w", encoding="utf-8")
-        json.dump(self.gv.default_qp_values, file)
+        if self.extension == '.qp':
+            json.dump(self.gv.default_qp_values, file)
+
+        elif self.extension == '.qpd':
+            json.dump(self.gv.default_qpd_values, file)
         file.close()
         self.done(1)
 
@@ -85,3 +90,4 @@ class OpenQPWidget(QtWidgets.QFileDialog):
                              'Question Paper (*.qp)')[0]
         if not self.open_file:
             return
+

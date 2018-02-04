@@ -1,6 +1,7 @@
 from ui_definitions import Ui_GeneratorMainWindow
 from PyQt5 import QtWidgets, QtCore
 from helper_widgets import NewQPWidget, OpenQPWidget
+from qpd_editor import  QPDWelcomeDialog
 from PyQt5.QtCore import QDate
 import json
 
@@ -10,7 +11,6 @@ class GeneratorMainWindow(QtWidgets.QMainWindow, Ui_GeneratorMainWindow):
     def __init__(self, file_path=''):
         super(self.__class__, self).__init__()
         self.setupUi(self)
-
         if not self.load_qp_data(file_path):
             return
         # Connect actions to slots
@@ -18,15 +18,20 @@ class GeneratorMainWindow(QtWidgets.QMainWindow, Ui_GeneratorMainWindow):
         self.actionLoad_QP.triggered.connect(self.open_file_action)
         self.pushButton.clicked.connect(self.generate_qp)
         self.qp_data_tool_button.clicked.connect(self.load_qp_data_tool_clicked)
+        self.qpd_open_push_button.clicked.connect(self.qpd_open_clicked)
 
     # Slots:
+
+    def qpd_open_clicked(self):
+
+        self.qpdwelcome = QPDWelcomeDialog()
+        self.qpdwelcome.show()
 
     def load_qp_data_tool_clicked(self):
         self.qp_data_file = QtWidgets.QFileDialog.getOpenFileName(self, 'Open Question paper data', str(QtCore.QStandardPaths.DocumentsLocation),
                                               'Question Paper Data (*.qpd)')[0]
         if not self.qp_data_file:
             return
-        self.qp_data_line_edit.setText(self.qp_data_file)
 
     def create_file_action(self):
         create_file_dialog = NewQPWidget()
@@ -39,6 +44,8 @@ class GeneratorMainWindow(QtWidgets.QMainWindow, Ui_GeneratorMainWindow):
             QtWidgets.QMessageBox.critical(self, 'Error', 'Question Bank data must be provided.',
                                            QtWidgets.QMessageBox.Ok)
             return
+
+        self.new_mw_test = GeneratorMainWindow()
 
     def open_file_action(self):
         open_file_dialog = OpenQPWidget()
