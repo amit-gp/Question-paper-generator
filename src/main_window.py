@@ -3,6 +3,7 @@ from PyQt5 import QtWidgets, QtCore
 from helper_widgets import NewQPWidget, OpenQPWidget
 from qpd_editor import  QPDWelcomeDialog
 from PyQt5.QtCore import QDate
+from reportlab.pdfgen import canvas
 import json
 
 
@@ -19,13 +20,17 @@ class GeneratorMainWindow(QtWidgets.QMainWindow, Ui_GeneratorMainWindow):
         self.actionNew_QP.triggered.connect(self.create_file_action)
         self.actionLoad_QP.triggered.connect(self.open_file_action)
         self.actionSave_QP.triggered.connect(self.save_file_action)
-        self.pushButton.clicked.connect(self.generate_qp)
+        self.GenQpPushButton.clicked.connect(self.generate_qp)
         self.qp_data_tool_button.clicked.connect(self.load_qp_data_tool_clicked)
-        self.qpd_open_push_button.clicked.connect(self.qpd_open_clicked)
+        self.LoadQpdPushButton.clicked.connect(self.qpd_open_clicked)
 
     # Slots:
 
     def qpd_open_clicked(self):
+
+        #Loading the listview..
+        self.load_qpd_data(self.qp_data_line_edit.text())
+
         self.qpdwelcome = QPDWelcomeDialog()
         self.qpdwelcome.show()
 
@@ -68,11 +73,42 @@ class GeneratorMainWindow(QtWidgets.QMainWindow, Ui_GeneratorMainWindow):
                                            QtWidgets.QMessageBox.Ok)
             return
 
+        canv = canvas.Canvas(self.exam_name_line_edit.text())
+        canv.save()
+
+        msg = QtWidgets.QMessageBox()
+        msg.setIcon(QtWidgets.QMessageBox.Information)
+
+        msg.setText("Success")
+        msg.setInformativeText("The Question paper has been generated !")
+        msg.setWindowTitle("Done")
+        msg.setStandardButtons(QtWidgets.QMessageBox.Ok)
+        #msg.buttonClicked.connect(msgbtn)
+
+        retval = msg.exec_()
+
     def open_file_action(self):
         open_file_dialog = OpenQPWidget()
         if not open_file_dialog.open_file:
             return
         self.load_qp_data(open_file_dialog.open_file)
+
+    def load_qpd_data(self, file_path):
+        if file_path == '':
+            QtWidgets.QMessageBox.critical(self, 'Error Creating', 'Unable to open the qpd file, exiting !',
+                                           QtWidgets.QMessageBox.Ok)
+            return 0
+
+        new_qp_file = open(file_path, "r")
+        json_data = json.load(new_qp_file)
+        new_qp_file.close()
+        print("Loaded data: " + str(json_data))
+
+        for key, value in json_data.items():
+            print(value["QUESTION"])
+            self.QpdListView.addItem(str(value['QUESTION']))
+
+        return 1
 
     def load_qp_data(self, file_path):
         if file_path == '':
