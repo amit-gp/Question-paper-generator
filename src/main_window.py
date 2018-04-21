@@ -101,9 +101,10 @@ class GeneratorMainWindow(QtWidgets.QMainWindow, Ui_GeneratorMainWindow):
         #                     str(i) + ". " + str(self.qpd_print_vals[str(i)]["QUESTION"]) + "\t\t[ " + str(
         #                         self.qpd_print_vals[str(i)]["MARKS"])
 
-
+        count = 0
         for key, val in self.qpd_json.items():
-            canv.drawString(30, 620 + (20 * int(key)),
+            count += 1
+            canv.drawString(30, 520 + (20 * count),
                  "Q. " + str(val["QUESTION"]) + "     [ " + str(
                                 val["MARKS"]) + "]")
 
