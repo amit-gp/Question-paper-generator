@@ -10,7 +10,7 @@ This is GUI based question paper generator, which given a database of questions,
 
 ## Screenshots ##
 
-![Alt text](/readme_content/main_menu.png?raw=true "Optional Title")
-![Alt text](/readme_content/welcome.png?raw=true "Optional Title")
+![Alt text](/readme-content/main_menu.png?raw=true "Optional Title")
+![Alt text](/readme-content/welcome.png?raw=true "Optional Title")
 
 
